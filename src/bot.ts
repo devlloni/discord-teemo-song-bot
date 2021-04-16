@@ -8,7 +8,10 @@ import {
     MessageEmbed
 } 
         from "discord.js";
+import CommandPlay from './commands/play'
+import CommandStop from './commands/stop';
 import command from './command';
+import Play from './commands/play';
 
 const client: Client = new Client();
 
@@ -76,23 +79,19 @@ command(client, ['embed'], (message: Message) => {
     .setImage(logo)
     .setThumbnail(logo)
     .setFooter('Cebate un poco, dejá de manquear.')
-    .addFields({
-        name: 'Field 1',
-        value: 'Hello world',
-        inline: true
-    },
-    {
-        name: 'Field 2',
-        value: 'Hello world',
-        inline: true
-    },
-    {
-        name: 'Field 3',
-        value: 'Hello world',
-        inline: true
-    }
-    )
     message.channel.send(embed);
+})
+
+//Youtube music play
+
+command(client, ['play', 'p'], (message: Message) => {
+    const args = message.content.slice(prefix.length).split(/ +/);
+    // const command = args.shift()?.toLowerCase();
+    CommandPlay.execute(message, args);
+});
+
+command(client, ['stop', 's'], (message:Message) => {
+    CommandStop.execute(message, '')
 })
 
 client.login(process.env.TOKEN_DS);

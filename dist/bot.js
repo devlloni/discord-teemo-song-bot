@@ -14,7 +14,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = require("dotenv");
 dotenv_1.config();
+const config_json_1 = require("./config.json");
 const discord_js_1 = require("discord.js");
+const play_1 = __importDefault(require("./commands/play"));
+const stop_1 = __importDefault(require("./commands/stop"));
 const command_1 = __importDefault(require("./command"));
 const client = new discord_js_1.Client();
 client.on('ready', () => {
@@ -74,20 +77,16 @@ command_1.default(client, ['embed'], (message) => {
         .setAuthor(message.author.username)
         .setImage(logo)
         .setThumbnail(logo)
-        .setFooter('Cebate un poco, dejá de manquear.')
-        .addFields({
-        name: 'Field 1',
-        value: 'Hello world',
-        inline: true
-    }, {
-        name: 'Field 2',
-        value: 'Hello world',
-        inline: true
-    }, {
-        name: 'Field 3',
-        value: 'Hello world',
-        inline: true
-    });
+        .setFooter('Cebate un poco, dejá de manquear.');
     message.channel.send(embed);
+});
+//Youtube music play
+command_1.default(client, ['play', 'p'], (message) => {
+    const args = message.content.slice(config_json_1.prefix.length).split(/ +/);
+    // const command = args.shift()?.toLowerCase();
+    play_1.default.execute(message, args);
+});
+command_1.default(client, ['stop', 's'], (message) => {
+    stop_1.default.execute(message, '');
 });
 client.login(process.env.TOKEN_DS);
