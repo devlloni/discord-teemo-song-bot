@@ -9,7 +9,7 @@ const CommandHandler = async (client: Client, aliases: String[], callback: Funct
         aliases.forEach( alias => {
             const command = `${prefix}${alias}`
             if(content.startsWith(`${command} `) || content === command){
-                console.log(`Running the command ${command}`);
+                // console.log(`Running the command ${command}`);
                 callback(message);
             }
             // ping

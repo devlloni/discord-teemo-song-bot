@@ -91,7 +91,12 @@ command(client, ['play', 'p'], (message: Message) => {
 });
 
 command(client, ['stop', 's'], (message:Message) => {
-    CommandStop.execute(message, '')
+    // CommandStop.execute(message, '')
+    CommandPlay.execute(message, '')
+});
+
+command(client, ['next', 'skip'], (message:Message) => {
+    CommandPlay.execute(message, '');
 })
 
 client.login(process.env.TOKEN_DS);

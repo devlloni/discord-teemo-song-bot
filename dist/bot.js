@@ -17,7 +17,6 @@ dotenv_1.config();
 const config_json_1 = require("./config.json");
 const discord_js_1 = require("discord.js");
 const play_1 = __importDefault(require("./commands/play"));
-const stop_1 = __importDefault(require("./commands/stop"));
 const command_1 = __importDefault(require("./command"));
 const client = new discord_js_1.Client();
 client.on('ready', () => {
@@ -87,6 +86,10 @@ command_1.default(client, ['play', 'p'], (message) => {
     play_1.default.execute(message, args);
 });
 command_1.default(client, ['stop', 's'], (message) => {
-    stop_1.default.execute(message, '');
+    // CommandStop.execute(message, '')
+    play_1.default.execute(message, '');
+});
+command_1.default(client, ['next', 'skip'], (message) => {
+    play_1.default.execute(message, '');
 });
 client.login(process.env.TOKEN_DS);
