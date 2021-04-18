@@ -20,7 +20,7 @@ const CommandHandler = (client, aliases, callback) => __awaiter(void 0, void 0, 
         aliases.forEach(alias => {
             const command = `${config_json_1.prefix}${alias}`;
             if (content.startsWith(`${command} `) || content === command) {
-                console.log(`Running the command ${command}`);
+                // console.log(`Running the command ${command}`);
                 callback(message);
             }
             // ping

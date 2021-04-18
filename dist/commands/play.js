@@ -80,6 +80,7 @@ const Play = {
                 title: video.title,
                 url: video.url
             };
+            //getRelatedSongs(song);
             const play = (guild, song) => {
                 const serverQueue = Queue_1.default.get(guild.id);
                 if (!song) {
@@ -90,11 +91,14 @@ const Play = {
                 const dispatcher = serverQueue.connection.play(ytdl_core_1.default(song.url))
                     .on('finish', () => {
                     serverQueue.songs.shift();
+                    console.log('Pasando al siguiente tema');
+                    console.log(serverQueue.songs);
                     play(guild, serverQueue.songs[0]);
                 })
                     .on('error', (error) => {
                     console.log(error);
                 });
+                console.log('reproduciendo el tema: ', song.title);
                 dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
                 message.channel.send(`🐝 Ahora estás escuchando: ***${song.title}*** 🐝`);
             };

@@ -4,6 +4,7 @@ import { prefix } from '../config.json'
 import { Message, Client, Guild } from 'discord.js';
 import { CommandInterface } from '../classes/CommandInterface';
 import { SongInterface } from '../classes/SongInterface';
+import getRelatedSongs from '../services/getRelatedSongs';
 import queue from '../helpers/Queue';
 
 const Play:CommandInterface = {
@@ -64,6 +65,7 @@ const Play:CommandInterface = {
                     title: video.title,
                     url: video.url
                 }
+                //getRelatedSongs(song);
                 const play = ( guild:any, song : SongInterface ) => {
                     const serverQueue = queue.get(guild.id);
                     
@@ -76,11 +78,14 @@ const Play:CommandInterface = {
                     const dispatcher = serverQueue.connection.play(ytdl(song.url))
                     .on('finish', () => {
                         serverQueue.songs.shift();
+                        console.log('Pasando al siguiente tema');
+                        console.log(serverQueue.songs);
                         play(guild, serverQueue.songs[0])
                     })
                     .on('error', (error:any) =>{
                         console.log(error);
                     });
+                    console.log('reproduciendo el tema: ', song.title)
                     dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
                     message.channel.send(`🐝 Ahora estás escuchando: ***${song.title}*** 🐝`);
                 }
