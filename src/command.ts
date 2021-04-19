@@ -1,5 +1,5 @@
 import { Client } from "discord.js"
-import { prefix } from './config.json';
+import { prefix } from './config/config.json';
 const CommandHandler = async (client: Client, aliases: String[], callback: Function) => {
 
     client.on('message', message=> {
