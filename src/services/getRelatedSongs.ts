@@ -4,7 +4,8 @@ import { token_yt } from '../config.json';
 import nodeFetch from 'node-fetch'
 
 const getRelatedSongs = async (song:SongInterface) => {
-    if(!song) return;
+    if(!song || !song.url) return;
+    const songsRelateds:any = [];
     const getIdSong = (song:SongInterface)=> {
         let id = song.url.split('v=')[1];
         return id;
@@ -16,14 +17,22 @@ const getRelatedSongs = async (song:SongInterface) => {
         const resp = json;
         const { items } = resp;
         items.map( (item:any) => {
-            if(item.snippet){
-                console.log(item.snippet.title);
+            if(item.snippet && item.id && item.id.videoId){
+                let videoId = item.id.videoId;
+                const song:SongInterface = {
+                    title: item.snippet.title ? item.snippet.title : 'Problema con el título',
+                    url: `https://www.youtube.com/watch?v=${videoId}`,
+                }
+                songsRelateds.push(song);
             }
-        })
+        });
+        return songsRelateds
+        
     }).catch((error:any)=>{
         console.error(error);
         return false;
-    })
+    });
+    return songsRelateds;
 }
 
 export default getRelatedSongs;

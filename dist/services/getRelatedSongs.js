@@ -15,8 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const config_json_1 = require("../config.json");
 const node_fetch_1 = __importDefault(require("node-fetch"));
 const getRelatedSongs = (song) => __awaiter(void 0, void 0, void 0, function* () {
-    if (!song)
+    if (!song || !song.url)
         return;
+    const songsRelateds = [];
     const getIdSong = (song) => {
         let id = song.url.split('v=')[1];
         return id;
@@ -28,13 +29,20 @@ const getRelatedSongs = (song) => __awaiter(void 0, void 0, void 0, function* ()
         const resp = json;
         const { items } = resp;
         items.map((item) => {
-            if (item.snippet) {
-                console.log(item.snippet.title);
+            if (item.snippet && item.id && item.id.videoId) {
+                let videoId = item.id.videoId;
+                const song = {
+                    title: item.snippet.title ? item.snippet.title : 'Problema con el título',
+                    url: `https://www.youtube.com/watch?v=${videoId}`,
+                };
+                songsRelateds.push(song);
             }
         });
+        return songsRelateds;
     }).catch((error) => {
         console.error(error);
         return false;
     });
+    return songsRelateds;
 });
 exports.default = getRelatedSongs;

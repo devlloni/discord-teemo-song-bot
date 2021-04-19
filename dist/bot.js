@@ -17,6 +17,7 @@ dotenv_1.config();
 const config_json_1 = require("./config.json");
 const discord_js_1 = require("discord.js");
 const play_1 = __importDefault(require("./commands/play"));
+const queue_1 = __importDefault(require("./commands/queue"));
 const command_1 = __importDefault(require("./command"));
 const client = new discord_js_1.Client();
 client.on('ready', () => {
@@ -79,8 +80,17 @@ command_1.default(client, ['embed'], (message) => {
         .setFooter('Cebate un poco, dejá de manquear.');
     message.channel.send(embed);
 });
+command_1.default(client, ['help', 'commands', 'ayuda', 'h'], (message) => {
+    const embed = new discord_js_1.MessageEmbed()
+        .setTitle('Teemón Music 2021 | Comandos')
+        .setAuthor(message.author.username)
+        .addFields(
+    // {name: 'NOMBRE COMANDO', value: 'DESCRIPCION', inline: true},
+    { name: '!!help  / !!ayuda', value: 'Muestra los comandos disponibles', inline: true }, { name: '!!hola  / !!hi', value: 'Saluda el bot', inline: true }, { name: '!!play', value: 'Reproduce la canción que encuentre en youtube mediante las palabras seguidas del comando estando en un canal de voz.', inline: true }, { name: '!!play -a', value: 'Reproduce de un modo automática la canción que encuentre en youtube, y va agregando música recomendada a la playlist.', inline: true }, { name: '!!skip  / !!next', value: 'Saltea la canción en reproducción por la siguiente en la lista.', inline: true }, { name: '!!queue  / !!q', value: 'Muestra la lista de canciones para reproducir en un canal.', inline: true });
+    message.channel.send(embed);
+});
 //Youtube music play
-command_1.default(client, ['play', 'p'], (message) => {
+command_1.default(client, ['play'], (message) => {
     const args = message.content.slice(config_json_1.prefix.length).split(/ +/);
     // const command = args.shift()?.toLowerCase();
     play_1.default.execute(message, args);
@@ -92,4 +102,7 @@ command_1.default(client, ['stop', 's'], (message) => {
 command_1.default(client, ['next', 'skip'], (message) => {
     play_1.default.execute(message, '');
 });
-client.login(process.env.TOKEN_DS);
+command_1.default(client, ['queue', 'q'], (message) => {
+    queue_1.default.execute(message, '');
+});
+client.login(config_json_1.token_ds);

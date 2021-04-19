@@ -1,6 +1,6 @@
-import { config } from 'dotenv';
-config();
-import {prefix} from './config.json';
+import { config as cnfg } from 'dotenv';
+cnfg();
+import {prefix, token_ds} from './config.json';
 import { 
     Client, 
     Message,
@@ -10,9 +10,9 @@ import {
         from "discord.js";
 import CommandPlay from './commands/play'
 import CommandStop from './commands/stop';
+import CommandQueue from './commands/queue';
 import command from './command';
 import Play from './commands/play';
-
 const client: Client = new Client();
 
 client.on('ready', ()=>{
@@ -79,12 +79,28 @@ command(client, ['embed'], (message: Message) => {
     .setImage(logo)
     .setThumbnail(logo)
     .setFooter('Cebate un poco, dejá de manquear.')
+    message.channel.send(embed); 
+});
+
+command(client, ['help', 'commands', 'ayuda', 'h'], (message:Message)=>{
+    const embed = new MessageEmbed()
+    .setTitle('Teemón Music 2021 | Comandos')
+    .setAuthor(message.author.username)
+    .addFields(
+                // {name: 'NOMBRE COMANDO', value: 'DESCRIPCION', inline: true},
+                {name: '!!help  / !!ayuda', value: 'Muestra los comandos disponibles', inline: true},
+                {name: '!!hola  / !!hi', value: 'Saluda el bot', inline: true},
+                {name: '!!play', value: 'Reproduce la canción que encuentre en youtube mediante las palabras seguidas del comando estando en un canal de voz.', inline: true},
+                {name: '!!play -a', value: 'Reproduce de un modo automática la canción que encuentre en youtube, y va agregando música recomendada a la playlist.', inline: true},
+                {name: '!!skip  / !!next', value: 'Saltea la canción en reproducción por la siguiente en la lista.', inline: true},
+                {name: '!!queue  / !!q', value: 'Muestra la lista de canciones para reproducir en un canal.', inline: true}
+            )
     message.channel.send(embed);
 })
 
 //Youtube music play
 
-command(client, ['play', 'p'], (message: Message) => {
+command(client, ['play'], (message: Message) => {
     const args = message.content.slice(prefix.length).split(/ +/);
     // const command = args.shift()?.toLowerCase();
     CommandPlay.execute(message, args);
@@ -99,4 +115,8 @@ command(client, ['next', 'skip'], (message:Message) => {
     CommandPlay.execute(message, '');
 })
 
-client.login(process.env.TOKEN_DS);
+command(client, ['queue', 'q'], (message: Message) =>{
+    CommandQueue.execute(message, '');
+})
+
+client.login(token_ds);
