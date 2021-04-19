@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const config_json_1 = require("./config.json");
+const config_json_1 = require("./config/config.json");
 const CommandHandler = (client, aliases, callback) => __awaiter(void 0, void 0, void 0, function* () {
     client.on('message', message => {
         const { content } = message;

@@ -18,8 +18,6 @@ const Queue:CommandInterface = {
 
         //! ------------------- List the queue
             if(!message.member?.voice.channel) return message.channel.send('¡Necesitas estar en un canal de voz para ejecutra este comando! 🐝')
-            
-            message.channel.send('aber');
             const queueList = queue.get(message.guild?.id);
             if (queueList){
                 const exampleEmbed = new MessageEmbed()

@@ -1,5 +1,5 @@
 import { SongInterface } from '../classes/SongInterface';
-import { token_yt } from '../config.json';
+import { token_yt } from '../config/config.json';
 
 import nodeFetch from 'node-fetch'
 

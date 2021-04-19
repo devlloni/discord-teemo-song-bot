@@ -1,6 +1,6 @@
 import { config as cnfg } from 'dotenv';
 cnfg();
-import {prefix, token_ds} from './config.json';
+import {prefix, token_ds} from './config/config.json';
 import { 
     Client, 
     Message,

@@ -34,7 +34,6 @@ const Queue = {
         //! ------------------- List the queue
         if (!((_c = message.member) === null || _c === void 0 ? void 0 : _c.voice.channel))
             return message.channel.send('¡Necesitas estar en un canal de voz para ejecutra este comando! 🐝');
-        message.channel.send('aber');
         const queueList = Queue_1.default.get((_d = message.guild) === null || _d === void 0 ? void 0 : _d.id);
         if (queueList) {
             const exampleEmbed = new discord_js_1.MessageEmbed();

@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = require("dotenv");
 dotenv_1.config();
-const config_json_1 = require("./config.json");
+const config_json_1 = require("./config/config.json");
 const discord_js_1 = require("discord.js");
 const play_1 = __importDefault(require("./commands/play"));
 const queue_1 = __importDefault(require("./commands/queue"));

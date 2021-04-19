@@ -1,6 +1,6 @@
 import ytdl from 'ytdl-core';
 import ytSearch from 'yt-search';
-import { prefix } from '../config.json'
+import { prefix } from '../config/config.json'
 import { Message, MessageEmbed, Client, Guild } from 'discord.js';
 import { CommandInterface } from '../classes/CommandInterface';
 import { SongInterface } from '../classes/SongInterface';
@@ -60,13 +60,12 @@ const Play:CommandInterface = {
             const connection = await voiceChannel.join();
         
             const videoFinder = async (query: any, autoplay:Boolean) => {
+
                 let newQuery:string = "";
                 if(autoplay && query.includes('play -a')){
                     newQuery = query.replace('play -a', '');
-                    console.log('query queda así:', newQuery);
                 }
-                console.log('se está buscando: ', newQuery);
-                console.log('ya que el autoplay está seteado en: ', autoplay)
+                
                 const videoResult = await ytSearch(autoplay ? newQuery : query);
     
                 return (videoResult.videos.length > 1 ) ? videoResult.videos[0] : null
@@ -101,7 +100,6 @@ const Play:CommandInterface = {
                             }
                         }
                         else if(serverQueue.songs.length == 1 && !serverQueue.autoPlay){
-                            console.log('no hay mas temas pero no hay autoplay')
                         }
                     }
                     if(!song){
@@ -130,7 +128,6 @@ const Play:CommandInterface = {
                         songs: [],
                         volume: 5,
                         playing: true,
-                        // autoPlay: false
                         autoPlay: AutoPlay
                     }
                     queue.set(message.guild?.id, queueConstruct);
@@ -156,13 +153,7 @@ const Play:CommandInterface = {
 
             }else{
                 message.channel.send('No se encontraron videos / canciones 🐝')
-            }
-        // }else{
-        //     message.channel.send('¡Pasá una URL válida papá! 🐝')
-        // }
-
-        
-        
+            }   
     }
 
 }

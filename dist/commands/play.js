@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const ytdl_core_1 = __importDefault(require("ytdl-core"));
 const yt_search_1 = __importDefault(require("yt-search"));
-const config_json_1 = require("../config.json");
+const config_json_1 = require("../config/config.json");
 const discord_js_1 = require("discord.js");
 const getRelatedSongs_1 = __importDefault(require("../services/getRelatedSongs"));
 const Queue_1 = __importDefault(require("../helpers/Queue"));
@@ -81,10 +81,7 @@ const Play = {
             let newQuery = "";
             if (autoplay && query.includes('play -a')) {
                 newQuery = query.replace('play -a', '');
-                console.log('query queda así:', newQuery);
             }
-            console.log('se está buscando: ', newQuery);
-            console.log('ya que el autoplay está seteado en: ', autoplay);
             const videoResult = yield yt_search_1.default(autoplay ? newQuery : query);
             return (videoResult.videos.length > 1) ? videoResult.videos[0] : null;
         });
@@ -116,7 +113,6 @@ const Play = {
                         }
                     }
                     else if (serverQueue.songs.length == 1 && !serverQueue.autoPlay) {
-                        console.log('no hay mas temas pero no hay autoplay');
                     }
                 }
                 if (!song) {
@@ -144,7 +140,6 @@ const Play = {
                     songs: [],
                     volume: 5,
                     playing: true,
-                    // autoPlay: false
                     autoPlay: AutoPlay
                 };
                 Queue_1.default.set((_e = message.guild) === null || _e === void 0 ? void 0 : _e.id, queueConstruct);
@@ -168,9 +163,6 @@ const Play = {
         else {
             message.channel.send('No se encontraron videos / canciones 🐝');
         }
-        // }else{
-        //     message.channel.send('¡Pasá una URL válida papá! 🐝')
-        // }
     })
 };
 exports.default = Play;
